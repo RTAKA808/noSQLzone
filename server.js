@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');
-
 const cwd = process.cwd();
 
 const PORT = process.env.PORT || 3001;
@@ -21,3 +20,6 @@ db.once('open', () => {
     console.log(`API server for ${activity} running on port ${PORT}!`);
   });
 });
+
+
+
