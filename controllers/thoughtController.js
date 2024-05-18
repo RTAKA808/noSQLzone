@@ -25,22 +25,34 @@ module.exports = {
   },
 
   // Create a new thought
-  async createThought(req, res) {
-    try {
-      const newThought = await Thought.create(req.body);
-      const user = await User.findByIdAndUpdate(
-        req.body.userId,
-        { $push: { thoughts: newThought._id } },
-        { new: true }
-      );
+// Create a new thought
+async createThought(req, res) {
+  try {
+      // Find the user by the username provided in the request body
+      const user = await User.findOne({ username: req.body.username });
       if (!user) {
-        return res.status(404).json({ message: 'Thought created but no user with this id!' });
+          return res.status(404).json({ message: 'No user found with this username!' });
       }
+
+      // Create the new thought
+      const newThought = await Thought.create({
+          thoughtText: req.body.thoughtText,
+          username: req.body.username,
+          reactions: req.body.reactions || []
+      });
+
+      // Add the thought to the user's thoughts array
+      await User.findByIdAndUpdate(
+          user._id,
+          { $push: { thoughts: newThought._id } },
+          { new: true }
+      );
+
       res.json(newThought);
-    } catch (err) {
+  } catch (err) {
       res.status(500).json(err);
-    }
-  },
+  }
+},
 
   // Update a thought by ID
   async updateThought(req, res) {

@@ -6,11 +6,6 @@ const users = [
     {
         username: 'bigKat',
         email: 'bigkat@gmail.com',
-        friends:[
-            {
-
-            }
-        ]
     },
     {
         username: 'madd',
@@ -69,8 +64,8 @@ const friendsMapping = {
 async function seedDatabase() {
     await connection.once('open', async () => {
 // Clear db
-        await User.deleteMany();
-        await Thought.deleteMany();
+        await User.deleteMany({});
+        await Thought.deleteMany({});
 
 // Insert users
     const createdUsers = await User.insertMany(users);
