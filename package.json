@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "devStart":"nodemon script.js"
+    "devStart":"nodemon script.js",
+    "seed":"node seed.js"
   },
   "dependencies": {
     "express": "^4.19.2",
     "mongoose": "^8.3.5",
     "nodemon": "^3.1.0"
   }
-}
+} 
